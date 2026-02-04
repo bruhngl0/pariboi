@@ -1,0 +1,930 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ProPlay Sports: Growth vs Responsibility</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --gold: #c9a961;
+        --dark-charcoal: #1a1a1a;
+        --charcoal: #2d2d2d;
+        --off-white: #f8f7f4;
+        --cream: #ebe8e1;
+        --silver: #a8a8a8;
+      }
+
+      body {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        background: var(--off-white);
+        color: var(--dark-charcoal);
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+
+      .slide {
+        min-height: 100vh;
+        max-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 3rem 2rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .slide-content {
+        max-width: 900px;
+        width: 100%;
+      }
+
+      .slide-1 {
+        background: var(--dark-charcoal);
+        color: var(--off-white);
+      }
+
+      .slide-1 .logo {
+        width: 60px;
+        height: 2px;
+        background: var(--gold);
+        margin-bottom: 2rem;
+      }
+
+      .slide-1 h1 {
+        font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+        font-weight: 300;
+        letter-spacing: -1px;
+        margin-bottom: 1rem;
+        line-height: 1.1;
+      }
+
+      .slide-1 .subtitle {
+        font-size: clamp(0.95rem, 1.3vw, 1.1rem);
+        color: var(--silver);
+        font-weight: 300;
+        margin-bottom: 2rem;
+      }
+
+      .slide-1 .meta {
+        font-size: 0.75rem;
+        color: var(--gold);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+
+      .slide-number {
+        position: absolute;
+        top: 2.5rem;
+        right: 2.5rem;
+        font-size: 0.8rem;
+        color: var(--silver);
+        letter-spacing: 1px;
+      }
+
+      h2 {
+        font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+        font-weight: 300;
+        letter-spacing: -1px;
+        margin-bottom: 2rem;
+        color: var(--dark-charcoal);
+        border-bottom: 1px solid var(--gold);
+        padding-bottom: 0.8rem;
+      }
+
+      h3 {
+        font-size: 1.2rem;
+        font-weight: 500;
+        margin: 1.5rem 0 1rem;
+        color: var(--charcoal);
+      }
+
+      p {
+        font-size: 1rem;
+        line-height: 1.7;
+        margin-bottom: 1.2rem;
+        color: var(--charcoal);
+        font-weight: 300;
+      }
+
+      .highlight {
+        background: var(--dark-charcoal);
+        color: var(--off-white);
+        padding: 2rem;
+        margin: 1.5rem 0;
+        border-left: 3px solid var(--gold);
+      }
+
+      .highlight h3 {
+        color: var(--gold);
+      }
+
+      .highlight p {
+        color: var(--cream);
+      }
+
+      .two-col {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        margin: 1.5rem 0;
+      }
+
+      .box {
+        background: white;
+        padding: 1.8rem;
+        border: 1px solid #e5e3dc;
+      }
+
+      .box h4 {
+        font-size: 1.1rem;
+        font-weight: 500;
+        margin-bottom: 0.8rem;
+        color: var(--dark-charcoal);
+      }
+
+      .box p {
+        font-size: 0.9rem;
+        line-height: 1.6;
+      }
+
+      .accent-line {
+        width: 50px;
+        height: 2px;
+        background: var(--gold);
+        margin: 1.5rem 0;
+      }
+
+      ul {
+        list-style: none;
+        margin: 1.5rem 0;
+      }
+
+      li {
+        padding: 0.7rem 0;
+        padding-left: 1.5rem;
+        position: relative;
+        font-size: 0.95rem;
+        color: var(--charcoal);
+        border-bottom: 1px solid #f0eee8;
+      }
+
+      li:last-child {
+        border-bottom: none;
+      }
+
+      li::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 1.2rem;
+        width: 5px;
+        height: 5px;
+        background: var(--gold);
+        border-radius: 50%;
+      }
+
+      .footer-slide {
+        background: var(--dark-charcoal);
+        color: var(--cream);
+        text-align: center;
+      }
+
+      .footer-slide h2 {
+        color: var(--off-white);
+        border-bottom: 1px solid var(--gold);
+      }
+
+      .nav-button {
+        position: fixed;
+        top: 50%;
+        transform: translateY(-50%);
+        background: var(--gold);
+        color: var(--dark-charcoal);
+        border: none;
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        z-index: 1000;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-weight: 300;
+      }
+
+      .nav-button:hover {
+        background: var(--dark-charcoal);
+        color: var(--gold);
+        transform: translateY(-50%) scale(1.1);
+      }
+
+      .nav-button:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+      }
+
+      .nav-button:disabled:hover {
+        background: var(--gold);
+        color: var(--dark-charcoal);
+        transform: translateY(-50%) scale(1);
+      }
+
+      .prev-button {
+        left: 2rem;
+      }
+
+      .next-button {
+        right: 2rem;
+      }
+
+      .slide {
+        display: none;
+      }
+
+      .slide.active {
+        display: flex;
+      }
+
+      .progress-bar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        height: 3px;
+        background: var(--gold);
+        transition: width 0.3s ease;
+        z-index: 1000;
+      }
+
+      @media (max-width: 768px) {
+        .slide {
+          padding: 2.5rem 1.5rem;
+        }
+
+        .two-col {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+        }
+
+        .slide-number {
+          top: 2rem;
+          right: 2rem;
+        }
+
+        .nav-button {
+          width: 50px;
+          height: 50px;
+          font-size: 1.2rem;
+        }
+
+        .prev-button {
+          left: 1rem;
+        }
+
+        .next-button {
+          right: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <button
+      class="nav-button prev-button"
+      id="prevBtn"
+      onclick="changeSlide(-1)"
+    >
+      ‹
+    </button>
+    <button
+      class="nav-button next-button"
+      id="nextBtn"
+      onclick="changeSlide(1)"
+    >
+      ›
+    </button>
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Slide 1: Title -->
+    <div class="slide slide-1">
+      <div class="slide-content" style="text-align: left; max-width: 1000px">
+        <div class="logo"></div>
+        <h1
+          style="font-size: clamp(2.2rem, 4.5vw, 3.5rem); margin-bottom: 0.8rem"
+        >
+          Growth vs Responsibility
+        </h1>
+        <p
+          class="subtitle"
+          style="font-size: clamp(0.95rem, 1.3vw, 1.1rem); margin-bottom: 2rem"
+        >
+          Making Strategic decisions at ProPlay Sports Pvt. Ltd.
+        </p>
+
+        <div
+          style="
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+          "
+        >
+          <div>
+            <h3
+              style="
+                color: var(--gold);
+                font-size: 0.75rem;
+                font-weight: 500;
+                margin-bottom: 0.8rem;
+                letter-spacing: 2px;
+                text-transform: uppercase;
+              "
+            >
+              Presented By
+            </h3>
+            <p
+              style="
+                color: var(--cream);
+                font-size: 0.85rem;
+                line-height: 1.6;
+                font-weight: 300;
+                margin-bottom: 0.3rem;
+              "
+            >
+              Hetshvi Bhupesh Jain – 23BBAR0925
+            </p>
+            <p
+              style="
+                color: var(--cream);
+                font-size: 0.85rem;
+                line-height: 1.6;
+                font-weight: 300;
+                margin-bottom: 0.3rem;
+              "
+            >
+              Lakshith Mutha – 23BBAR0150
+            </p>
+            <p
+              style="
+                color: var(--cream);
+                font-size: 0.85rem;
+                line-height: 1.6;
+                font-weight: 300;
+              "
+            >
+              Anirudh Verma – 23BBAR0922
+            </p>
+
+            <div
+              style="
+                margin-top: 1.5rem;
+                padding-top: 1.5rem;
+                border-top: 1px solid rgba(201, 169, 97, 0.3);
+              "
+            >
+              <h3
+                style="
+                  color: var(--gold);
+                  font-size: 0.75rem;
+                  font-weight: 500;
+                  margin-bottom: 0.8rem;
+                  letter-spacing: 2px;
+                  text-transform: uppercase;
+                "
+              >
+                Program
+              </h3>
+              <p
+                style="
+                  color: var(--cream);
+                  font-size: 0.85rem;
+                  line-height: 1.6;
+                  font-weight: 300;
+                "
+              >
+                VI Semester
+              </p>
+              <p
+                style="
+                  color: var(--cream);
+                  font-size: 0.85rem;
+                  line-height: 1.6;
+                  font-weight: 300;
+                "
+              >
+                Sport Management
+              </p>
+            </div>
+          </div>
+
+          <div>
+            <h3
+              style="
+                color: var(--gold);
+                font-size: 0.75rem;
+                font-weight: 500;
+                margin-bottom: 0.8rem;
+                letter-spacing: 2px;
+                text-transform: uppercase;
+              "
+            >
+              Subjects Covered
+            </h3>
+            <p
+              style="
+                color: var(--cream);
+                font-size: 0.85rem;
+                line-height: 1.6;
+                font-weight: 300;
+                margin-bottom: 0.3rem;
+              "
+            >
+              • Income Tax
+            </p>
+            <p
+              style="
+                color: var(--cream);
+                font-size: 0.85rem;
+                line-height: 1.6;
+                font-weight: 300;
+                margin-bottom: 0.3rem;
+              "
+            >
+              • Procurement, Storage & Warehouse Management
+            </p>
+            <p
+              style="
+                color: var(--cream);
+                font-size: 0.85rem;
+                line-height: 1.6;
+                font-weight: 300;
+                margin-bottom: 0.3rem;
+              "
+            >
+              • Sports Finance
+            </p>
+            <p
+              style="
+                color: var(--cream);
+                font-size: 0.85rem;
+                line-height: 1.6;
+                font-weight: 300;
+                margin-bottom: 0.3rem;
+              "
+            >
+              • E-Commerce
+            </p>
+            <p
+              style="
+                color: var(--cream);
+                font-size: 0.85rem;
+                line-height: 1.6;
+                font-weight: 300;
+                margin-bottom: 0.3rem;
+              "
+            >
+              • Contemporary Issues in Sports Culture
+            </p>
+            <p
+              style="
+                color: var(--cream);
+                font-size: 0.85rem;
+                line-height: 1.6;
+                font-weight: 300;
+              "
+            >
+              • Artificial Intelligence & Decision Making
+            </p>
+          </div>
+        </div>
+
+        <p
+          class="meta"
+          style="
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(201, 169, 97, 0.3);
+          "
+        >
+          Case Study • 2026
+        </p>
+      </div>
+    </div>
+
+    <!-- Slide 2: Organizational Background -->
+    <div class="slide">
+      <div class="slide-content">
+        <div class="slide-number">02</div>
+        <h2>Organizational Background</h2>
+        <div class="accent-line"></div>
+        <p>
+          ProPlay Sports Pvt. Ltd. is a sport oriented business with its
+          operations in the field of sport retailing and services in India. The
+          company was founded in 2019 with the focus on online selling sports
+          equipment, sponsorship programs of athletes, and marketing sports
+          programs at the community level in the urban and semi-urban areas of
+          India.
+        </p>
+        <p>
+          The company operates mostly based on an e-commerce model, which is
+          backed by centralized procurement and a chain of regional warehouses
+          in South and West India. ProPlay markets itself as a commercial sports
+          venture and at the same time endorses ethical sporting behaviors,
+          inclusivity and long term sporting talent development.
+        </p>
+      </div>
+    </div>
+
+    <!-- Slide 3: Business Environment -->
+    <div class="slide">
+      <div class="slide-content">
+        <div class="slide-number">03</div>
+        <h2>Business Environment</h2>
+        <div class="accent-line"></div>
+        <p>
+          The sports business ecosystem in India has also been developing at a
+          very fast pace, owing to the growing health consciousness, more people
+          have moved towards digitalization and sports have become more
+          commercialized. The growth of the e-commerce websites has increased
+          the competition level that has made sports companies concentrate on
+          pricing effectiveness, speedy delivery, and decision-making based on
+          technological factors.
+        </p>
+        <p>
+          On the one hand, organizations have more opportunities to develop, but
+          on the other hand, there are additional challenges of control in
+          relation to the payment of taxes, expenditures on sponsorship and
+          corporate social responsibility towards athletes and communities.
+        </p>
+      </div>
+    </div>
+
+    <!-- Slide 4: Technology Integration -->
+    <div class="slide">
+      <div class="slide-content">
+        <div class="slide-number">04</div>
+        <h2>AI Integration at ProPlay</h2>
+        <div class="accent-line"></div>
+        <p>
+          At ProPlay, AI-powered applications have been implemented to predict
+          demand, control stock and customer behavior. These technological
+          faculties have played a major role in the managerial decision making
+          processes in the fields of finance, operations and internet trading.
+        </p>
+        <div class="highlight">
+          <h3>Impact on Decision-Making</h3>
+          <p>
+            The integration of AI systems has fundamentally changed how ProPlay
+            approaches business decisions, bringing both opportunities for
+            optimization and new challenges in terms of governance and ethical
+            oversight.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 5: Current Managerial Situation -->
+    <div class="slide">
+      <div class="slide-content">
+        <div class="slide-number">05</div>
+        <h2>Current Managerial Situation</h2>
+        <div class="accent-line"></div>
+        <p>
+          The management at ProPlay will be faced with numerous operational and
+          strategic pressures by the end of FY 2025-26. The rapid development of
+          online sales has led to the increase in volumes of procurement and the
+          usage of warehouses, which causes the increase in storage costs and
+          the rise in inventory risks.
+        </p>
+        <p>
+          The finance department has expressed issues of variable profit margins
+          and income taxation of athlete sponsorship costs. Meanwhile, the
+          operations team highlights the necessity of bulk purchases to cope
+          with the volatility of the demand and service levels.
+        </p>
+      </div>
+    </div>
+
+    <!-- Slide 6: Leadership Pressures -->
+    <div class="slide">
+      <div class="slide-content">
+        <div class="slide-number">06</div>
+        <h2>Leadership Challenges</h2>
+        <div class="accent-line"></div>
+        <p>
+          The top management is equally under pressure to maintain the level of
+          ethical sporting culture in ProPlay as more commercialization and
+          competition mounts pressure based on the latter.
+        </p>
+        <div class="two-col">
+          <div class="box">
+            <h4>Financial Pressures</h4>
+            <p>
+              Variable profit margins and complex tax implications of
+              sponsorship expenditures
+            </p>
+          </div>
+          <div class="box">
+            <h4>Operational Demands</h4>
+            <p>
+              Balancing bulk procurement benefits against rising storage costs
+              and inventory risks
+            </p>
+          </div>
+        </div>
+        <div class="box">
+          <h4>Cultural Commitment</h4>
+          <p>
+            Maintaining ethical sporting values amid increasing commercial
+            pressures
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 7: Interdisciplinary Context -->
+    <div class="slide">
+      <div class="slide-content">
+        <div class="slide-number">07</div>
+        <h2>Interdisciplinary Decision Situation</h2>
+        <div class="accent-line"></div>
+        <p>
+          The managerial challenge is complicated by the combination of various
+          academic and functional approaches. Multiple disciplines intersect to
+          create a complex decision-making environment that requires careful
+          navigation and integration of different perspectives.
+        </p>
+      </div>
+    </div>
+
+    <!-- Slide 8: AI-Driven Decision Making -->
+    <div class="slide">
+      <div class="slide-content">
+        <div class="slide-number">08</div>
+        <h2>AI-Driven Decision Making</h2>
+        <div class="accent-line"></div>
+        <p>
+          The AI systems offer predictive analytics in the sales trends,
+          inventory optimization and procurement planning. Nevertheless, the
+          growing use of the results of algorithmic decisions poses issues that
+          are associated with transparency, managerial responsibility, and moral
+          judgment.
+        </p>
+        <div class="highlight">
+          <h3>The Challenge</h3>
+          <p>
+            How much should management rely on AI-generated insights versus
+            human judgment when making strategic decisions?
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 9: E-Commerce Challenges -->
+    <div class="slide">
+      <div class="slide-content">
+        <div class="slide-number">09</div>
+        <h2>E-Commerce Dynamics</h2>
+        <div class="accent-line"></div>
+        <p>
+          Digital promotions and flash sales online attract a quick growth in
+          revenue but pose challenges in long-term inventory planning, filling
+          of orders, and the use of warehouses.
+        </p>
+        <p>
+          The rapid growth strategy through online channels creates operational
+          complexities that must be managed carefully to maintain service
+          quality while controlling costs.
+        </p>
+      </div>
+    </div>
+
+    <!-- Slide 10: Income Tax Considerations -->
+    <div class="slide">
+      <div class="slide-content">
+        <div class="slide-number">10</div>
+        <h2>Income Tax Implications</h2>
+        <div class="accent-line"></div>
+        <p>
+          The tax implications of sponsorship expenditures made on athletes,
+          depreciation of sports equipment and reporting of income present
+          compliance issues and affect financial planning choices.
+        </p>
+        <p>
+          Relevant policy considerations include income tax provisions that
+          apply in sponsorship costs and legal considerations that apply in
+          online operations of the business.
+        </p>
+      </div>
+    </div>
+
+    <!-- Slide 11: Procurement & Warehousing -->
+    <div class="slide">
+      <div class="slide-content">
+        <div class="slide-number">11</div>
+        <h2>Procurement, Storage & Warehouse Management</h2>
+        <div class="accent-line"></div>
+        <p>
+          Bulk buying plans lower the per-unit costs of procuring products to
+          the disadvantage of higher inventory holding costs and the danger of
+          stagnant or slow moving products.
+        </p>
+        <ul>
+          <li>Increasing warehouse storage expenses in quarter to quarter</li>
+          <li>Growing ratio of overall sales made on digital promotions</li>
+          <li>
+            Increasing sponsorship spending that affect the taxable income
+            levels
+          </li>
+          <li>
+            Predictions of AI-based predictions with high seasonal demand
+            volatility
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Slide 12: Sports Business Finance -->
+    <div class="slide">
+      <div class="slide-content">
+        <div class="slide-number">12</div>
+        <h2>Sports Business Finance</h2>
+        <div class="accent-line"></div>
+        <p>
+          Investments in athlete sponsorships, the infrastructure and the
+          digital growth have trade-offs that directly impact profitability and
+          the financial sustainability in the long-term.
+        </p>
+        <div class="highlight">
+          <h3>Resource Allocation Dilemma</h3>
+          <p>
+            Management must decide how to distribute limited financial resources
+            across competing priorities while maintaining both commercial
+            viability and social commitments.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 13: Contemporary Sporting Culture -->
+    <div class="slide">
+      <div class="slide-content">
+        <div class="slide-number">13</div>
+        <h2>Contemporary Issues in Sporting Culture</h2>
+        <div class="accent-line"></div>
+        <p>
+          Commercial success and fair play preservation versus the promotion of
+          athlete welfare and growth of grassroots sports give the managerial
+          decision-making a social and ethical angle.
+        </p>
+        <p>
+          These related issues, along with others, pose conflicting priorities
+          and restraints to the management.
+        </p>
+      </div>
+    </div>
+
+    <!-- Slide 14: Indian Knowledge Systems -->
+    <div class="slide">
+      <div class="slide-content">
+        <div class="slide-number">14</div>
+        <h2>Indian Knowledge Systems Perspective</h2>
+        <div class="accent-line"></div>
+        <p>
+          The leadership philosophy of ProPlay is based on the Indian idea of
+          Dharma or the ethical accountability and moderation of business
+          practices. The principle of Trusteeship also finds its way into the
+          organization as the organization considers profits just as a way of
+          supporting athletes, communities and the greater sporting ecosystem
+          and not necessarily as a way of accumulation.
+        </p>
+        <p>
+          These values are the ones that affect the debate on internal
+          management about whether aggressive growth policies are in line with
+          the traditional Indian principles of fairness, discipline, and social
+          contribution by sports.
+        </p>
+      </div>
+    </div>
+
+    <!-- Slide 15: Sustainability Dimensions -->
+    <div class="slide">
+      <div class="slide-content">
+        <div class="slide-number">15</div>
+        <h2>Sustainability Considerations</h2>
+        <div class="accent-line"></div>
+        <p>
+          The managerial dilemma is developed under the influence of
+          sustainability considerations in the following ways:
+        </p>
+        <ul>
+          <li>
+            <strong>Environmental sustainability:</strong> More packaging and
+            the overall emissions related to logistics that come as a result of
+            e-commerce activities
+          </li>
+          <li>
+            <strong>Social sustainability:</strong> Ongoing funding of youth
+            sports and inclusion
+          </li>
+          <li>
+            <strong>Economic sustainability:</strong> This is the ability to
+            ensure that the business is financially stable over the long-term as
+            the costs of operation increase
+          </li>
+          <li>
+            <strong>Ethical governance:</strong> Favorable utilization of AI
+            systems and diligent income tax disclosure
+          </li>
+        </ul>
+        <p>
+          These dimensions have a direct influence on strategic decisions and
+          the priorities of the organization.
+        </p>
+      </div>
+    </div>
+
+    <!-- Slide 16: The Decision Dilemma -->
+    <div class="slide footer-slide">
+      <div class="slide-content">
+        <div class="slide-number">16</div>
+        <h2>The Decision Dilemma</h2>
+        <div class="accent-line"></div>
+        <p>
+          With ProPlay approaching the next stage of its expansion, the
+          management has to decide how to strike the right balance between the
+          AI-driven efficiency of its functioning, financial results, payment of
+          the income taxes, effectiveness of the procurement process, and
+          ethical adherence to sporting culture.
+        </p>
+        <p style="margin-top: 2rem">
+          Some of the questions facing leadership include:
+        </p>
+        <ul style="text-align: left; max-width: 700px; margin: 1.5rem auto">
+          <li>
+            How much should AI-infused insights be used in making strategic and
+            operational decisions?
+          </li>
+          <li>
+            How can the cost of procurement and warehouse be controlled without
+            the service quality being affected?
+          </li>
+          <li>
+            What should be the balance between money and tax and ethical
+            obligations towards the sports development?
+          </li>
+        </ul>
+        <p style="margin-top: 2rem; color: var(--gold)">
+          The future of ProPlay in the dynamic sports business environment in
+          India will be determined by the decisions made.
+        </p>
+      </div>
+    </div>
+
+    <script>
+      let currentSlide = 0;
+      const slides = document.querySelectorAll(".slide");
+      const totalSlides = slides.length;
+      const prevBtn = document.getElementById("prevBtn");
+      const nextBtn = document.getElementById("nextBtn");
+      const progressBar = document.getElementById("progressBar");
+
+      function showSlide(n) {
+        slides.forEach((slide) => slide.classList.remove("active"));
+
+        if (n >= totalSlides) {
+          currentSlide = totalSlides - 1;
+        } else if (n < 0) {
+          currentSlide = 0;
+        } else {
+          currentSlide = n;
+        }
+
+        slides[currentSlide].classList.add("active");
+
+        prevBtn.disabled = currentSlide === 0;
+        nextBtn.disabled = currentSlide === totalSlides - 1;
+
+        const progress = ((currentSlide + 1) / totalSlides) * 100;
+        progressBar.style.width = progress + "%";
+      }
+
+      function changeSlide(direction) {
+        showSlide(currentSlide + direction);
+      }
+
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "ArrowLeft") {
+          changeSlide(-1);
+        } else if (e.key === "ArrowRight") {
+          changeSlide(1);
+        }
+      });
+
+      showSlide(0);
+    </script>
+  </body>
+</html>
